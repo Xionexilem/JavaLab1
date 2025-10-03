@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -76,24 +77,16 @@ public class Main {
 
   // Задача 9
   public String day (int x) {
-    switch (x) {
-      case 1:
-        return "понедельник";
-      case 2:
-        return "вторник";
-      case 3:
-        return "среда";
-      case 4:
-        return "четверг";
-      case 5:
-        return "пятница";
-      case 6:
-        return "суббота";
-      case 7:
-        return "воскресенье";
-      default:
-        return "это не день недели";
-    }
+    return switch (x) {
+      case 1 -> "понедельник";
+      case 2 -> "вторник";
+      case 3 -> "среда";
+      case 4 -> "четверг";
+      case 5 -> "пятница";
+      case 6 -> "суббота";
+      case 7 -> "воскресенье";
+      default -> "это не день недели";
+    };
   }
 
   // Задание 3
@@ -192,28 +185,84 @@ public class Main {
       arr[i] = arr[index];
       arr[index] = temp;
     }
+    System.out.print("arr=" + Arrays.toString(arr));
   }
 
+  // Задача 9
+  public int[] findAll (int[] arr, int x) {
+    int count = 0;
+    int pos = 0;
+    for (int i : arr) {
+      if (i == x) {
+        count++;
+      }
+    }
+    int[] newArr = new int[count];
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == x) { newArr[pos] = i; pos++; }
+    }
+    return newArr;
+  }
+
+  // Задача 10
+  public int[] deleteNegative (int[] arr) {
+    int count = 0;
+    int pos = 0;
+    for (int i : arr) {
+      if (i >= 0) {
+        count++;
+      }
+    }
+    int[] newArr = new int[count];
+    for (int i : arr) {
+      if (i >= 0) {
+        newArr[pos] = i;
+        pos++;
+      }
+    }
+    return newArr;
+  }
+
+  // Для визулаьной части начала задания
   private void visualTopTab (int exercise, int task) {
     String visual = " ========== ";
     System.out.println(visual + "Задание №" + exercise + "  Задача №" + task + visual);
   }
 
+  // Для визуальной части конца задания
   private void visualBottomTab () {
     String visual = " ================== ";
     System.out.println(visual + "Конец" + visual);
   }
 
+  // Сообщение о неизвестной задаче
   private void unknownTask (int exercise) {
     System.out.println("Неизвестная задача в задании №" + exercise);
   }
 
+  // Сообщение о неверном значении
   private void invalidValue () {
     System.out.println("Введено неверное значение, попробуйте ещё раз.");
   }
 
+  // Просьба ввода
   private void pleaseEnter (String text) {
     System.out.print("Введите " + text + ": ");
+  }
+
+  // Создание массивов с вводом
+  private int[] createArr () {
+    Main obj = new Main();
+    try (Scanner scanner = new Scanner(System.in)) {
+      obj.pleaseEnter("длину массива");
+      int arrLen = scanner.nextInt();
+      int[] arr = new int[arrLen];
+      for (int i = 0; i < arrLen; i++) {
+        obj.pleaseEnter(i + "-й элемент");
+        arr[i] = scanner.nextInt();
+      }
+      return arr;
+    }
   }
 
   public static void main(String[] args) {
@@ -245,18 +294,21 @@ public class Main {
                 break;
               }
               case 3: {
+                System.out.println("Преобразование символа цифры в число");
                 obj.pleaseEnter("символ");
                 char x = scanner.next().charAt(0);
                 System.out.println(result + obj.charToNum(x));
                 break;
               }
               case 6: {
+                System.out.println("Проверка символа, что это верхний регистр.");
                 obj.pleaseEnter("символ");
                 char x = scanner.next().charAt(0);
                 System.out.println(result + obj.isUpperCase(x));
                 break;
               }
               case 8: {
+                System.out.println("Проверка на возможное деление между числами.");
                 obj.pleaseEnter("первое целочисленное значение");
                 int a = scanner.nextInt();
                 obj.pleaseEnter("второе целочисленное значение");
@@ -265,10 +317,22 @@ public class Main {
                 break;
               }
               case 10: {
-                break; // доделать
+                System.out.println("Сложение единиц пяти значений.");
+                obj.pleaseEnter("первое целочисленное значение");
+                int x = scanner.nextInt();
+                for (int i = 0; i < 4; i ++) {
+                  System.out.print(x + "+");
+                  int tmp = scanner.nextInt();
+                  x = obj.lastNumSum(x, tmp);
+                  System.out.print("это " + x);
+                  System.out.println();
+                }
+                System.out.println(result + x);
+                break;
               }
               default: {
                 obj.unknownTask(numberExercise);
+                continue;
               }
             }
             break;
@@ -316,6 +380,7 @@ public class Main {
               }
               default: {
                 obj.unknownTask(numberExercise);
+                continue;
               }
             }
             break;
@@ -362,12 +427,63 @@ public class Main {
               }
               default: {
                 obj.unknownTask(numberExercise);
+                continue;
               }
             }
+            break;
+          }
+          case 4: {
+            switch (numberTask) {
+              case 4: {
+                System.out.println("Вставка в массив элемента на позицию X.");
+                int[] arr = obj.createArr();
+                obj.pleaseEnter("вставляемое целочисленное значение");
+                int x = scanner.nextInt();
+                obj.pleaseEnter("позицию вставки (от 0 до " + arr.length + ")");
+                int pos = scanner.nextInt();
+                System.out.println(result + Arrays.toString(obj.add(arr, x, pos)));
+                break;
+              }
+              case 5: {
+                System.out.println("Вставка в массив элемента на позицию X.");
+                int[] arr = obj.createArr();
+                int[] ins = obj.createArr();
+                obj.pleaseEnter("позицию вставки (от 0 до " + arr.length + ")");
+                int pos = scanner.nextInt();
+                System.out.println(result + Arrays.toString(obj.add(arr, ins, pos)));
+                break;
+              }
+              case 6: {
+                System.out.println("Переворот массива задом-наперёд.");
+                int[] arr = obj.createArr();
+                System.out.println(result);
+                obj.reverse(arr);
+                break;
+              }
+              case 9: {
+                System.out.println("Нахождение всех вхождений значения X в массиве.");
+                int[] arr = obj.createArr();
+                obj.pleaseEnter("искомое целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + Arrays.toString(obj.findAll(arr, x)));
+                break;
+              }
+              case 10: {
+                System.out.println("Удаление всех отрицательных значений в массиве.");
+                int[] arr = obj.createArr();
+                System.out.println(result + Arrays.toString(obj.deleteNegative(arr)));
+                break;
+              }
+              default: {
+                obj.unknownTask(numberExercise);
+                continue;
+              }
+            }
+            break;
           }
           default: {
             System.out.println("Неизвестная задание");
-            break;
+            continue;
           }
         }
 
@@ -379,6 +495,7 @@ public class Main {
       }
     }
 
+    scanner.close();
     System.out.println("Программа успешно завершила работу.");
   }
 }
