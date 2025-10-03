@@ -127,7 +127,7 @@ public class Main {
       for (int j = 0; j < x; j++) {
         System.out.print('*');
       }
-      System.out.println("");
+      System.out.println();
     }
   }
 
@@ -137,7 +137,7 @@ public class Main {
       for (int j = 0; j < i; j++) {
         System.out.print('*');
       }
-      System.out.println("");
+      System.out.println();
     }
   }
 
@@ -151,7 +151,7 @@ public class Main {
           System.out.print('*');
         }
       }
-      System.out.println("");
+      System.out.println();
     }
   }
 
@@ -194,20 +194,146 @@ public class Main {
     }
   }
 
-  private void visualTopTab (String exercise, String task) {
+  private void visualTopTab (int exercise, int task) {
     String visual = " ========== ";
-    System.out.println(visual + "Задание №" + exercise + " Задача №" + task + visual);
+    System.out.println(visual + "Задание №" + exercise + "  Задача №" + task + visual);
   }
 
   private void visualBottomTab () {
-    String visual = " ========== ";
+    String visual = " ================== ";
     System.out.println(visual + "Конец" + visual);
   }
 
-  public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    String numberExercise = scanner.nextInt();
-    String numberTask = scanner.nextLine();
+  private void unknownTask (int exercise) {
+    System.out.println("Неизвестная задача в задании №" + exercise);
+  }
 
+  private void invalidValue () {
+    System.out.println("Введено неверное значение, попробуйте ещё раз.");
+  }
+
+  private void pleaseEnter (String text) {
+    System.out.print("Введите " + text + ": ");
+  }
+
+  public static void main(String[] args) {
+    Main obj = new Main();
+    Scanner scanner = new Scanner(System.in);
+    String result = "результат: ";
+    boolean isWork = true;
+
+    while (isWork) {
+      try {
+      obj.pleaseEnter("номер задания (-1 - выход)");
+      int numberExercise = scanner.nextInt();
+
+      if (numberExercise == -1) {isWork = false; break;}
+
+      obj.pleaseEnter("номер задачи");
+      int numberTask = scanner.nextInt();
+
+      obj.visualTopTab(numberExercise, numberTask);
+
+        switch (numberExercise) {
+          case 1: {
+            switch (numberTask) {
+              case 2: {
+                System.out.println("Нахождение суммы двух последних знаков числа.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.sumLastNums(x));
+                break;
+              }
+              case 3: {
+                obj.pleaseEnter("символ");
+                char x = scanner.next().charAt(0);
+                System.out.println(result + obj.charToNum(x));
+                break;
+              }
+              case 6: {
+                obj.pleaseEnter("символ");
+                char x = scanner.next().charAt(0);
+                System.out.println(result + obj.isUpperCase(x));
+                break;
+              }
+              case 8: {
+                obj.pleaseEnter("первое целочисленное значение");
+                int a = scanner.nextInt();
+                obj.pleaseEnter("второе целочисленное значение");
+                int b = scanner.nextInt();
+                System.out.println(result + obj.isDivisor(a, b));
+                break;
+              }
+              case 10: {
+                break; // доделать
+              }
+              default: {
+                obj.unknownTask(numberExercise);
+              }
+            }
+            break;
+          }
+          case 2: {
+            switch (numberTask) {
+              case 1: {
+                System.out.println("Нахождение модуля числа.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.abs(x));
+                break;
+              }
+              case 2: {
+                System.out.println("Нахождение деления числа X на Y");
+                obj.pleaseEnter("целочисленное значение X");
+                int x = scanner.nextInt();
+                obj.pleaseEnter("целочисленное значение Y");
+                int y = scanner.nextInt();
+                System.out.println(result + obj.safeDiv(x, y));
+                break;
+              }
+              case 7: {
+                System.out.println("Нахождение суммы двух чисел. Если сумма попадает в диапазон от 10 до 19, то равна 20");
+                obj.pleaseEnter("первое целочисленное значение");
+                int x = scanner.nextInt();
+                obj.pleaseEnter("второе целочисленное значение");
+                int y = scanner.nextInt();
+                System.out.println(result + obj.sum2(x, y));
+                break;
+              }
+              case 8: {
+                System.out.println("Добавление к числу слова 'год' со склонением");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.age(x));
+                break;
+              }
+              case 9: {
+                System.out.println("День недели в зависимости от числа дня.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.day(x));
+                break;
+              }
+              default: {
+                obj.unknownTask(numberExercise);
+              }
+            }
+            break;
+          }
+          default: {
+            System.out.println("Неизвестная задание");
+            break;
+          }
+        }
+
+        obj.visualBottomTab();
+      } catch (Exception e) {
+        obj.invalidValue();
+        scanner.nextLine();
+        continue;
+      }
+    }
+
+    System.out.println("Программа успешно завершила работу.");
   }
 }
