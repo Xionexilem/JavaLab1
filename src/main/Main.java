@@ -320,6 +320,51 @@ public class Main {
             }
             break;
           }
+          case 3: {
+            switch (numberTask) {
+              case 3: {
+                System.out.println("Вывод всех чётных чисел от 0 до x.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.chet(x));
+                break;
+              }
+              case 5: {
+                System.out.println("Вывод количества знаков в числе.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result + obj.numLen(x));
+                break;
+              }
+              case 7: {
+                System.out.println("Вывод квадрата из '*'.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result);
+                obj.square(x);
+                break;
+              }
+              case 8: {
+                System.out.println("Вывод левостороннего треугольника из '*'.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result);
+                obj.leftTriangle(x);
+                break;
+              }
+              case 9: {
+                System.out.println("Вывод правостроннего треугольника из '*'.");
+                obj.pleaseEnter("целочисленное значение");
+                int x = scanner.nextInt();
+                System.out.println(result);
+                obj.rightTriangle(x);
+                break;
+              }
+              default: {
+                obj.unknownTask(numberExercise);
+              }
+            }
+          }
           default: {
             System.out.println("Неизвестная задание");
             break;
