@@ -14,7 +14,7 @@ public class Main {
 
   // Задача 3
   public int charToNum (char x) {
-    return Character.getNumericValue(x);
+    return x - '0';
   }
 
   // Задача 6
@@ -93,12 +93,10 @@ public class Main {
   // Задача 3
   public String chet (int x) {
     StringBuilder result = new StringBuilder();
-    for (int i = 0; i <= x; i++) {
-      if (i % 2 == 0) {
-        result.append(i);
-        if (i != x) {
-          result.append(" ");
-        }
+    for (int i = 0; i <= x; i+=2) {
+      result.append(i);
+      if (i != x) {
+        result.append(" ");
       }
     }
     return result.toString();
@@ -106,6 +104,7 @@ public class Main {
 
   // Задача 5
   public int numLen (long x) {
+    if (x == 0) {return 1;}
     int result = 0;
     while (x != 0) {
       x /= 10;
@@ -172,7 +171,7 @@ public class Main {
       newArr[i + pos] = ins[i];
     }
     for (int i = pos; i < arr.length; i++) {
-      newArr[i + arr.length] = arr[i]; 
+      newArr[i + ins.length] = arr[i];
     }
     return newArr;
   }
@@ -185,7 +184,7 @@ public class Main {
       arr[i] = arr[index];
       arr[index] = temp;
     }
-    System.out.print("arr=" + Arrays.toString(arr));
+    System.out.println("arr=" + Arrays.toString(arr));
   }
 
   // Задача 9
@@ -251,18 +250,16 @@ public class Main {
   }
 
   // Создание массивов с вводом
-  private int[] createArr () {
+  private int[] createArr (Scanner scanner) {
     Main obj = new Main();
-    try (Scanner scanner = new Scanner(System.in)) {
-      obj.pleaseEnter("длину массива");
-      int arrLen = scanner.nextInt();
-      int[] arr = new int[arrLen];
-      for (int i = 0; i < arrLen; i++) {
-        obj.pleaseEnter(i + "-й элемент");
-        arr[i] = scanner.nextInt();
-      }
-      return arr;
+    obj.pleaseEnter("длину массива");
+    int arrLen = scanner.nextInt();
+    int[] arr = new int[arrLen];
+    for (int i = 0; i < arrLen; i++) {
+      obj.pleaseEnter(i + "-й элемент");
+      arr[i] = scanner.nextInt();
     }
+    return arr;
   }
 
   public static void main(String[] args) {
@@ -436,7 +433,7 @@ public class Main {
             switch (numberTask) {
               case 4: {
                 System.out.println("Вставка в массив элемента на позицию X.");
-                int[] arr = obj.createArr();
+                int[] arr = obj.createArr(scanner);
                 obj.pleaseEnter("вставляемое целочисленное значение");
                 int x = scanner.nextInt();
                 obj.pleaseEnter("позицию вставки (от 0 до " + arr.length + ")");
@@ -446,8 +443,8 @@ public class Main {
               }
               case 5: {
                 System.out.println("Вставка в массив элемента на позицию X.");
-                int[] arr = obj.createArr();
-                int[] ins = obj.createArr();
+                int[] arr = obj.createArr(scanner);
+                int[] ins = obj.createArr(scanner);
                 obj.pleaseEnter("позицию вставки (от 0 до " + arr.length + ")");
                 int pos = scanner.nextInt();
                 System.out.println(result + Arrays.toString(obj.add(arr, ins, pos)));
@@ -455,14 +452,14 @@ public class Main {
               }
               case 6: {
                 System.out.println("Переворот массива задом-наперёд.");
-                int[] arr = obj.createArr();
+                int[] arr = obj.createArr(scanner);
                 System.out.println(result);
                 obj.reverse(arr);
                 break;
               }
               case 9: {
                 System.out.println("Нахождение всех вхождений значения X в массиве.");
-                int[] arr = obj.createArr();
+                int[] arr = obj.createArr(scanner);
                 obj.pleaseEnter("искомое целочисленное значение");
                 int x = scanner.nextInt();
                 System.out.println(result + Arrays.toString(obj.findAll(arr, x)));
@@ -470,7 +467,7 @@ public class Main {
               }
               case 10: {
                 System.out.println("Удаление всех отрицательных значений в массиве.");
-                int[] arr = obj.createArr();
+                int[] arr = obj.createArr(scanner);
                 System.out.println(result + Arrays.toString(obj.deleteNegative(arr)));
                 break;
               }
@@ -490,8 +487,7 @@ public class Main {
         obj.visualBottomTab();
       } catch (Exception e) {
         obj.invalidValue();
-        scanner.nextLine();
-        continue;
+        scanner.next();
       }
     }
 
