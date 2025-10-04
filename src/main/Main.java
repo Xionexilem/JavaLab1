@@ -19,8 +19,7 @@ public class Main {
 
   // Задача 6
   public boolean isUpperCase (char x) {
-    char clone = Character.toUpperCase(x);
-    return x == clone;
+    return 65 <= (int) x && (int) x <= 90;
   }
 
   // Задача 8
